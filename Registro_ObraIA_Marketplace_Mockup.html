@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro Obra·IA — Conectores y skills para construcción</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C1826; --ink2:#0A1420; --panel:#122438; --panel-b:rgba(255,255,255,.09);
+  --steel:#4FA3E3; --amber:#FFC24B; --paper:#E8EEF4; --muted:#9DB2C6; --dim:#6E86A0;
+  --green:#7ED9A6; --purple:#C9A6FF;
+  --grid:rgba(79,163,227,.06);
+  --disp:"Space Grotesk",sans-serif; --body:"IBM Plex Sans",sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); line-height:1.5;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.wrap{max-width:1220px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;font-size:11px;color:var(--dim)}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.06;margin:0}
+
+/* top bar */
+.top{border-bottom:1px solid var(--panel-b);position:sticky;top:0;background:rgba(12,24,38,.92);backdrop-filter:blur(6px);z-index:30}
+.topin{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;font-size:15px}
+.brand .seal{width:26px;height:26px;border-radius:50%;border:1.4px solid var(--amber);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;color:var(--amber)}
+.brand span{color:var(--amber)}
+.topcta{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:9px 16px;border-radius:6px;cursor:pointer;border:none}
+
+/* hero */
+.hero{padding:56px 0 30px;border-bottom:1px solid var(--panel-b)}
+.hero .kick{color:var(--steel)}
+.hero h1{font-size:clamp(32px,4.6vw,52px);margin:14px 0 0;letter-spacing:-.02em;max-width:760px}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero p.lead{max-width:600px;margin:18px 0 0;color:var(--muted);font-size:15.5px}
+.stats{display:flex;gap:34px;margin-top:30px;flex-wrap:wrap}
+.stat b{font-family:var(--disp);font-size:26px;display:block;color:var(--paper)}
+.stat span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+/* controls */
+.controls{padding:26px 0;border-bottom:1px solid var(--panel-b);position:sticky;top:63px;background:rgba(12,24,38,.92);backdrop-filter:blur(6px);z-index:20}
+.searchrow{display:flex;gap:12px;margin-bottom:14px}
+.searchrow input{flex:1;background:var(--panel);border:1px solid var(--panel-b);border-radius:8px;padding:11px 14px;color:var(--paper);font-family:var(--body);font-size:14px}
+.searchrow input::placeholder{color:var(--dim)}
+.searchrow input:focus{outline:none;border-color:var(--steel)}
+.chiprow{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:7px 13px;border-radius:999px;border:1px solid var(--panel-b);color:var(--muted);background:rgba(255,255,255,.02);cursor:pointer;transition:all .15s ease}
+.chip:hover{border-color:var(--muted)}
+.chip.active{color:var(--ink);background:var(--steel);border-color:var(--steel)}
+.chip.divider{width:1px;padding:0;margin:0 4px;border:none;background:var(--panel-b);cursor:default}
+
+/* layout */
+.layout{display:grid;grid-template-columns:210px 1fr;gap:30px;padding:30px 0 70px}
+.index{border-right:1px solid var(--panel-b);padding-right:22px}
+.index .itag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.index ul{list-style:none;margin:0 0 26px;padding:0;display:flex;flex-direction:column;gap:10px}
+.index li{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.index li b{color:var(--paper);font-weight:500}
+.index li span{font-family:var(--mono);color:var(--dim);font-size:11.5px}
+.index .legend{display:flex;flex-direction:column;gap:9px;font-size:12px;color:var(--muted)}
+.index .legend div{display:flex;align-items:center;gap:8px}
+.swatch{width:11px;height:11px;border-radius:3px;flex:none}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-content:start}
+.card{background:var(--panel);border:1px solid var(--panel-b);border-radius:12px;padding:18px;position:relative;display:flex;flex-direction:column;min-height:210px;transition:border-color .15s ease, transform .15s ease}
+.card:hover{border-color:var(--steel);transform:translateY(-2px)}
+.card.mcp{border-left:3px solid var(--steel)}
+.card.skill{border-left:3px solid var(--amber)}
+.cardtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.code{font-family:var(--mono);font-size:10.5px;color:var(--dim);letter-spacing:.06em}
+.stamp{width:44px;height:44px;border-radius:50%;border:1.4px dashed var(--amber);display:flex;align-items:center;justify-content:center;flex-direction:column;transform:rotate(-9deg);flex:none}
+.stamp b{font-family:var(--mono);font-size:6.6px;letter-spacing:.05em;color:var(--amber);text-align:center;line-height:1.15}
+.card h3{font-size:16px;margin:2px 0 6px}
+.card p.desc{color:var(--muted);font-size:13px;margin:0 0 14px;flex:1}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:4px 8px;border-radius:5px;border:1px solid var(--panel-b);color:var(--muted)}
+.tag.cat{color:var(--paper)}
+.cardbot{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--panel-b)}
+.price{font-family:var(--mono);font-size:12px}
+.price.free{color:var(--green)}
+.price.paid{color:var(--amber)}
+.price.soon{color:var(--dim)}
+.installbtn{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;border-radius:6px;border:1px solid var(--steel);color:var(--steel);background:transparent;cursor:pointer}
+.installbtn:hover{background:var(--steel);color:var(--ink)}
+.installbtn[disabled]{border-color:var(--panel-b);color:var(--dim);cursor:default}
+.installbtn[disabled]:hover{background:transparent;color:var(--dim)}
+.community{position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);border:1px solid var(--panel-b);padding:3px 7px;border-radius:5px}
+
+.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--dim);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+/* publish CTA */
+.publish{border-top:1px solid var(--panel-b);padding:50px 0;background:linear-gradient(180deg,var(--ink2),var(--ink))}
+.publishin{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.publish h2{font-size:clamp(22px,3vw,32px);max-width:520px;letter-spacing:-.01em}
+.publish p{color:var(--muted);font-size:14.5px;max-width:480px;margin:10px 0 0}
+.publishbtn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:14px 22px;border-radius:8px;background:var(--amber);color:var(--ink);border:none;cursor:pointer;white-space:nowrap}
+
+footer{padding:24px 0;border-top:1px solid var(--panel-b)}
+footer .mono{color:var(--dim)}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .index{border-right:none;border-bottom:1px solid var(--panel-b);padding-right:0;padding-bottom:20px}
+  .grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .stats{gap:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap topin">
+    <div class="brand"><span class="seal">OI</span>Registro <span>Obra·IA</span></div>
+    <button class="topcta">Publicar conector</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="mono kick">Registro técnico · MCPs y skills</div>
+    <h1>El catálogo de referencia de <em>IA para construcción.</em></h1>
+    <p class="lead">No es una tienda de apps genérica: es el directorio donde el sector encuentra qué conectar a Claude para cada problema de obra — con qué está probado, quién lo certificó y cuánto cuesta.</p>
+    <div class="stats">
+      <div class="stat"><b>14</b><span>Conectores catalogados</span></div>
+      <div class="stat"><b>4</b><span>Categorías de obra</span></div>
+      <div class="stat"><b>6</b><span>Certificados Obra·IA</span></div>
+      <div class="stat"><b>2026</b><span>Actualizado en julio</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <div class="searchrow">
+      <input id="search" type="text" placeholder="Buscar por nombre — “Revizto”, “curva S”, “NCR”…">
+    </div>
+    <div class="chiprow" id="chips">
+      <button class="chip active" data-f="kind:all">Todos</button>
+      <button class="chip" data-f="kind:mcp">MCP</button>
+      <button class="chip" data-f="kind:skill">Skill</button>
+      <span class="chip divider"></span>
+      <button class="chip" data-f="cat:BIM">BIM · Coordinación</button>
+      <button class="chip" data-f="cat:Calidad">Calidad y SSOMA</button>
+      <button class="chip" data-f="cat:Producción">Producción</button>
+      <button class="chip" data-f="cat:Documentación">Documentación</button>
+      <span class="chip divider"></span>
+      <button class="chip" data-f="price:free">Gratis</button>
+      <button class="chip" data-f="price:paid">Con suscripción</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="layout">
+    <aside class="index">
+      <div class="itag">Índice por categoría</div>
+      <ul id="indexlist"></ul>
+      <div class="itag">Cómo leer una ficha</div>
+      <div class="legend">
+        <div><span class="swatch" style="background:var(--steel)"></span>Borde azul — Conector MCP</div>
+        <div><span class="swatch" style="background:var(--amber)"></span>Borde ámbar — Skill</div>
+        <div><span class="swatch" style="border:1.4px dashed var(--amber);background:transparent"></span>Sello — Certificado Obra·IA</div>
+      </div>
+    </aside>
+
+    <main class="grid" id="grid"></main>
+  </div>
+</div>
+
+<section class="publish">
+  <div class="wrap publishin">
+    <div>
+      <h2>¿Construiste un MCP o skill para obra?</h2>
+      <p>El registro crece con cada equipo que documenta lo que construyó. Publícalo, se revisa, y si pasa el estándar entra certificado — igual que Revizto o Bilding.</p>
+    </div>
+    <button class="publishbtn">Enviar mi conector</button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span class="mono">Registro Obra·IA — Mockup de portal · No es un producto en producción</span></div>
+</footer>
+
+<script>
+const DATA = [
+  {code:"MCP·001", name:"Revizto", kind:"mcp", cat:"BIM", price:"paid", amount:"$25/mes", desc:"Issues, clashes y coordinación BIM conectados directo a la conversación con Claude.", cert:true},
+  {code:"MCP·002", name:"Autodesk ACC", kind:"mcp", cat:"BIM", price:"paid", amount:"$30/mes", desc:"Modelos, cantidades y estado de documentación desde el modelo federado.", cert:true},
+  {code:"MCP·003", name:"Google Sheets", kind:"mcp", cat:"Documentación", price:"free", amount:"Incluido", desc:"Lee y escribe reportes diarios y actas directo en la base del cliente.", cert:true},
+  {code:"MCP·004", name:"Read.ai", kind:"mcp", cat:"Documentación", price:"free", amount:"Incluido", desc:"Transcribe reuniones y extrae decisiones y pendientes automáticamente.", cert:true},
+  {code:"MCP·005", name:"Bilding", kind:"mcp", cat:"Calidad", price:"paid", amount:"$18/mes", desc:"Conecta horas hombre y asistencia de campo al flujo de reportes.", cert:true},
+  {code:"MCP·006", name:"Procore", kind:"mcp", cat:"BIM", price:"soon", amount:"Próximamente", desc:"Gestión de proyecto y RFIs — integración en desarrollo.", cert:false},
+  {code:"MCP·007", name:"SAP", kind:"mcp", cat:"Producción", price:"soon", amount:"Próximamente", desc:"Costos y órdenes de compra — integración en desarrollo.", cert:false},
+  {code:"SKL·001", name:"Actas de reunión", kind:"skill", cat:"Documentación", price:"free", amount:"Incluido", desc:"Redacta el acta desde cualquier transcripción de reunión.", cert:true},
+  {code:"SKL·002", name:"NCR / Punch list", kind:"skill", cat:"Calidad", price:"free", amount:"Incluido", desc:"Redacta no conformidades desde una foto y una nota de campo.", cert:true},
+  {code:"SKL·003", name:"Look-ahead 3 semanas", kind:"skill", cat:"Producción", price:"paid", amount:"$9/mes", desc:"Cruza cronograma y reportes diarios para armar el look-ahead.", cert:true},
+  {code:"SKL·004", name:"Triaje de clashes", kind:"skill", cat:"BIM", price:"paid", amount:"$9/mes", desc:"Agrupa, prioriza y asigna disciplina a cada interferencia del modelo.", cert:true},
+  {code:"SKL·005", name:"Curva S", kind:"skill", cat:"Producción", price:"free", amount:"Incluido", desc:"Genera el análisis de curva S desde el avance reportado.", cert:false},
+  {code:"SKL·006", name:"Motor de claims", kind:"skill", cat:"Producción", price:"paid", amount:"$15/mes", desc:"Arma la evidencia de atrasos desde diarios, fotos, actas y cronograma.", cert:true},
+  {code:"SKL·007", name:"Checklist ATS / AST", kind:"skill", cat:"Calidad", price:"free", amount:"Incluido", desc:"Genera la charla de 5 minutos y el permiso según la tarea del día.", cert:false},
+];
+
+const CAT_LABEL = {BIM:"BIM · Coordinación", Calidad:"Calidad y SSOMA", Producción:"Producción y costos", Documentación:"Documentación"};
+
+let active = {kind:"all", cat:null, price:null};
+let query = "";
+
+function buildIndex(){
+  const counts = {};
+  DATA.forEach(d=>{counts[d.cat]=(counts[d.cat]||0)+1});
+  const list = document.getElementById("indexlist");
+  list.innerHTML = Object.keys(CAT_LABEL).map(k=>`<li><b>${CAT_LABEL[k]}</b><span>${counts[k]||0}</span></li>`).join("");
+}
+
+function card(d){
+  const priceHtml = d.price==="free" ? `<span class="price free">Gratis</span>`
+    : d.price==="soon" ? `<span class="price soon">Próximamente</span>`
+    : `<span class="price paid">${d.amount}</span>`;
+  const btn = d.price==="soon" ? `<button class="installbtn" disabled>En desarrollo</button>`
+    : `<button class="installbtn">Ver ficha</button>`;
+  const stamp = d.cert ? `<div class="stamp"><b>CERTIFICADO<br>OBRA·IA</b></div>` : `<div class="community">Comunidad</div>`;
+  return `<div class="card ${d.kind}">
+    ${d.cert ? "" : stamp}
+    <div class="cardtop">
+      <span class="code">${d.code}</span>
+      ${d.cert ? stamp : ""}
+    </div>
+    <h3>${d.name}</h3>
+    <p class="desc">${d.desc}</p>
+    <div class="tags"><span class="tag cat">${CAT_LABEL[d.cat]}</span><span class="tag">${d.kind.toUpperCase()}</span></div>
+    <div class="cardbot">${priceHtml}${btn}</div>
+  </div>`;
+}
+
+function render(){
+  const grid = document.getElementById("grid");
+  const filtered = DATA.filter(d=>{
+    if(active.kind!=="all" && d.kind!==active.kind) return false;
+    if(active.cat && d.cat!==active.cat) return false;
+    if(active.price && d.price!==active.price) return false;
+    if(query && !d.name.toLowerCase().includes(query) && !d.desc.toLowerCase().includes(query)) return false;
+    return true;
+  });
+  grid.innerHTML = filtered.length ? filtered.map(card).join("") : `<div class="empty">Sin resultados en el registro</div>`;
+}
+
+document.getElementById("chips").addEventListener("click", (e)=>{
+  const btn = e.target.closest(".chip");
+  if(!btn || btn.classList.contains("divider")) return;
+  const [type,val] = btn.getAttribute("data-f").split(":");
+  document.querySelectorAll(`.chip[data-f^="${type}:"]`).forEach(c=>c.classList.remove("active"));
+  if(type==="kind"){ active.kind = val; btn.classList.add("active"); }
+  if(type==="cat"){
+    if(active.cat===val){ active.cat=null; } else { active.cat=val; btn.classList.add("active"); }
+  }
+  if(type==="price"){
+    if(active.price===val){ active.price=null; } else { active.price=val; btn.classList.add("active"); }
+  }
+  render();
+});
+
+document.getElementById("search").addEventListener("input",(e)=>{
+  query = e.target.value.trim().toLowerCase();
+  render();
+});
+
+buildIndex();
+render();
+</script>
+</body>
+</html>
